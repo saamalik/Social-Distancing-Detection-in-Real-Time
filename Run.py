@@ -72,7 +72,7 @@ while True:
 			break
 
 	# resize the frame and then detect people (and only people) in it
-	frame = imutils.resize(frame, width=700)
+	frame = imutils.resize(frame, width=1700)
 	results = detect_people(frame, net, ln,
 		personIdx=LABELS.index("person"))
 
@@ -122,32 +122,32 @@ while True:
 		cv2.circle(frame, (cX, cY), 5, color, 2)
 
 	# draw some of the parameters
-	Safe_Distance = "Safe distance: >{} px".format(config.MAX_DISTANCE)
-	cv2.putText(frame, Safe_Distance, (470, frame.shape[0] - 25),
-		cv2.FONT_HERSHEY_SIMPLEX, 0.60, (255, 0, 0), 2)
-	Threshold = "Threshold limit: {}".format(config.Threshold)
-	cv2.putText(frame, Threshold, (470, frame.shape[0] - 50),
-		cv2.FONT_HERSHEY_SIMPLEX, 0.60, (255, 0, 0), 2)
+	# Safe_Distance = "Safe distance: >{} px".format(config.MAX_DISTANCE)
+	# cv2.putText(frame, Safe_Distance, (470, frame.shape[0] - 25),
+	# 	cv2.FONT_HERSHEY_SIMPLEX, 0.60, (255, 0, 0), 2)
+	# Threshold = "Threshold limit: {}".format(config.Threshold)
+	# cv2.putText(frame, Threshold, (470, frame.shape[0] - 50),
+	# 	cv2.FONT_HERSHEY_SIMPLEX, 0.60, (255, 0, 0), 2)
 
     # draw the total number of social distancing violations on the output frame
-	text = "Total serious violations: {}".format(len(serious))
-	cv2.putText(frame, text, (10, frame.shape[0] - 55),
+	text = "Violations: {}".format(len(serious))
+	cv2.putText(frame, text, (10, frame.shape[0] - 25),
 		cv2.FONT_HERSHEY_SIMPLEX, 0.70, (0, 0, 255), 2)
 
-	text1 = "Total abnormal violations: {}".format(len(abnormal))
-	cv2.putText(frame, text1, (10, frame.shape[0] - 25),
-		cv2.FONT_HERSHEY_SIMPLEX, 0.70, (0, 255, 255), 2)
+	# text1 = "Total abnormal violations: {}".format(len(abnormal))
+	# cv2.putText(frame, text1, (10, frame.shape[0] - 25),
+	# 	cv2.FONT_HERSHEY_SIMPLEX, 0.70, (0, 255, 255), 2)
 
 #------------------------------Alert function----------------------------------#
-	if len(serious) >= config.Threshold:
-		cv2.putText(frame, "-ALERT: Violations over limit-", (10, frame.shape[0] - 80),
-			cv2.FONT_HERSHEY_COMPLEX, 0.60, (0, 0, 255), 2)
-		if config.ALERT:
-			print("")
-			print('[INFO] Sending mail...')
-			Mailer().send(config.MAIL)
-			print('[INFO] Mail sent')
-		#config.ALERT = False
+	#if len(serious) >= config.Threshold:
+	#	cv2.putText(frame, "-ALERT: Violations over limit-", (10, frame.shape[0] - 80),
+	#		cv2.FONT_HERSHEY_COMPLEX, 0.60, (0, 0, 255), 2)
+	#	if config.ALERT:
+	#		print("")
+	#		print('[INFO] Sending mail...')
+	#		Mailer().send(config.MAIL)
+	#		print('[INFO] Mail sent')
+	#	#config.ALERT = False
 #------------------------------------------------------------------------------#
 	# check to see if the output frame should be displayed to our screen
 	if args["display"] > 0:
