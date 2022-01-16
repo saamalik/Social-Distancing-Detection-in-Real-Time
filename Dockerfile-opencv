@@ -26,6 +26,12 @@ RUN apt-get -qq update \
         libpq-dev \
     && pip install numpy \
     && wget -q https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip -O opencv.zip \
+
+
+
+
+
+
     && unzip -qq opencv.zip -d /opt \
     && rm -rf opencv.zip \
     && cmake \

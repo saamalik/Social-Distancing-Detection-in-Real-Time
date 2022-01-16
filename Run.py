@@ -15,12 +15,27 @@ pageData = "<!DOCTYPE>" + \
             "<html>" + \
             "  <head>" + \
             "    <title>Social Distancer</title>" + \
+            "     <style>body { background-color: black; text-align: center; } #image { height: 100% }</style>" + \
             "  </head>" + \
             "  <body>" + \
             "<img id=\"image\"/>"+ \
             " <script type=\"text/javascript\">var image = document.getElementById('image');function refresh() {image.src = \"/image?\" + new Date().getTime();image.onload= function(){setTimeout(refresh, 30);}}refresh();</script>   "+ \
             "  </body>" + \
             "</html>"
+# pageData = "<!DOCTYPE>" + \
+#             "<html>" + \
+#             "  <head>" + \
+#             "    <title>Social Distancer</title>" + \
+#             "     <style>html { background: url(/image) no-repeat center center fixed; background-size: contain; background-color: black; transition: background-image 1s ease-in-out;}</style>" + \
+#             " <script type=\"text/javascript\">var image = document.documentElement;function refresh() {image.style.backgroundImage = \"url(/image?\" + new Date().getTime() + \")\"};setInterval(refresh, 1000);</script>   "+ \
+#             "  </head>" + \
+#             "  <body>" + \
+#             "  </body>" + \
+#             "</html>"
+
+            # " <script type=\"text/javascript\">var image = document.documentElement;function refresh() {image.style.backgroundImage = \"url(/image?\" + new Date().getTime() + \");image.onload= function(){setTimeout(refresh, 30);}}refresh();</script>   "+ \
+            #"<img id=\"image\" />"+ \
+            # " <script type=\"text/javascript\">var image = document.getElementById('image');function refresh() {image.src = \"/image?\" + new Date().getTime();image.onload= function(){setTimeout(refresh, 30);}}refresh();</script>   "+ \
 
 class MyHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
@@ -79,11 +94,11 @@ ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
 # if a video path was not supplied, grab a reference to the camera
 print("[INFO] Starting the live stream..")
-vs = cv2.VideoCapture(config.url)
-vs.set(cv2.CAP_PROP_BUFFERSIZE, 0)
-# if config.Thread:
-#                 cap = thread.ThreadingClass(config.url)
-time.sleep(0.5)
+# vs = cv2.VideoCapture(config.url)
+cap = thread.ThreadingClass(config.url)
+#vs.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+
+time.sleep(2)
 
 # otherwise, grab a reference to the video file
 # start the FPS counter
@@ -99,10 +114,7 @@ class FrameThread (threading.Thread):
         global jpg, cap
 
         while self.isRunning:
-            (grabbed, frame) = vs.read()
-            # if the frame was not grabbed, then we have reached the end of the stream
-            if not grabbed:
-                break
+            frame = cap.read()
 
             # resize the frame and then detect people (and only people) in it
             frame = imutils.resize(frame, width=1300)
@@ -182,7 +194,7 @@ with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
 print('Server is stopped')
 frame_thread.isRunning = False
 frame_thread.join()
-vs.release()
+cap.release()
 
 
 fps.stop()
