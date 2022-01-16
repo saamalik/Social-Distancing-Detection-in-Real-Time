@@ -17,7 +17,7 @@ Threshold = 15
 # Enter the ip camera url (e.g., url = 'http://191.138.0.100:8040/video');
 # Set url = 0 for webcam.
 # url = 0
-url = 1
+url = 0
 # Turn ON/OFF the email alert feature.
 ALERT = False
 # Set mail to receive the real-time alerts. E.g., 'xxx@gmail.com'.

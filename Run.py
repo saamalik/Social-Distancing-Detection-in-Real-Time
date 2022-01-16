@@ -9,7 +9,7 @@ import threading
 import socketserver
 import http.server
 
-PORT = 2020
+PORT = 8080
 
 pageData = "<!DOCTYPE>" + \
             "<html>" + \
@@ -189,6 +189,3 @@ fps.stop()
 print("===========================")
 print("[INFO] Elasped time: {:.2f}".format(fps.elapsed()))
 print("[INFO] Approx. FPS: {:.2f}".format(fps.fps()))
-
-# close any open windows
-cv2.destroyAllWindows()
